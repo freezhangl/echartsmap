@@ -193,7 +193,7 @@ export default {
           //   zIndex: 400,
           trigger: 'item', // 鼠标划过时饼状图上显示的数据
           formatter: item => {
-            console.log(item, '加肥加大')
+            // console.log(item, '加肥加大')
             const aaa = require('../assets/infinity-2128861.jpg')
             var str = `<div style = "background:url(${aaa}) no-repeat 100% 100% ;height:90px;min-width:130px;color:#FFFFFF;">
                     <div style="padding-left:11px;padding-top:4px;">${item?.data?.name}:<br/>离线数量: ${item?.data?.offLineAreaStationCount}</div>

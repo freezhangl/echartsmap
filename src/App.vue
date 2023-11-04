@@ -1,12 +1,19 @@
 <template>
   <div id="app">
     <!-- <router-view/> -->
-    <div style="color:#fff;position: absolute;cursor: pointer;z-index: 9999;" @click="mm">返回</div>
+    <div style="color:#fff;position: absolute;color: purple;font-weight: bold; cursor: pointer;z-index: 9999;top: 20px;right: 20px;" @click="goback" v-if="mapShow">
+        返回
+    </div>
+    <div style="color:#fff;position: absolute;cursor: pointer;color: purple;font-weight: bold;z-index: 9999;right: 20px;">
+        {{addressStr}}
+    </div>
     <yyCenterTopVue
+      v-if="!mapShow"
       :centerTopInfo="centerTopInfo"
       :regionGeoJson="regionGeoJson"
       @updateEchartsInfo="updateEchartsInfo"
     />
+    <bdMap v-if="bdmapShow" ref="bdMap"></bdMap>
   </div>
 </template>
 <script>
@@ -14,23 +21,25 @@ import axios from 'axios'
 import alljson from './assets/alljson'
 import chinaJson from  './assets/china'
 import yyCenterTopVue from './components/yyCenterTop.vue'
+import bdMap from './components/bdMap.vue'
 export default {
   name: 'HomeView',
   components: {
     // HelloWorld
-    yyCenterTopVue
+    yyCenterTopVue,
+    bdMap
   },
   data(){
     return{
+      bdmapShow:false,
+      addressStr: '全国',
+      mapShow:false,
       origin: window.location.origin.indexOf('localhost') > 0 ? '' : window.location.origin + '/areas_v3/bound',
       formData: {
-        provinceId: '',
         provinceName: '',
         provinceCode: '',
-        cityId: '',
         cityName: '',
         cityCode: '',
-        districtId: '',
         districtCode: '',
         districtName: ''
       },
@@ -49,19 +58,33 @@ export default {
     })
     this.chinaJson = chinaJson
     this.init()
+    this.bdmapShow=true
   },
   methods:{
-    mm(){
+    goback(){
+      this.formData.districtCode = ''
+      this.formData.provinceCode = ''
+      this.formData.provinceName = ''
+      this.formData.districtName = ''
+      this.formData.cityCode = ''
+      this.formData.cityName = ''
+      this.mapShow=false
+      this.init()
       // console.log('我是谁阿凡达',fileRename)
     },
-    init(addressCode = [], clickRegionCode) {
+    init(addressCode = [], clickRegionCode,clickInfo) {
       // 默认获取全国的信息
-      this.getCenterCenterData(addressCode, clickRegionCode)
       if (addressCode.length) {
-        this.addressStr = `${this.formData.provinceName}${this.formData.cityName}`
+        this.addressStr = `${this.formData.provinceName}${this.formData.cityName}${this.formData.districtName}`
       } else {
         this.addressStr = `全国`
       }
+      if(this.formData.districtName) {
+        this.mapShow=true
+        this.$refs.bdMap.initMap(clickInfo)
+        return
+      }
+      this.getCenterCenterData(addressCode, clickRegionCode)
     },
     async getCenterCenterData(addressCode = [], clickRegionCode) {
       // 获取中间地图信息,去请求当前所有省的离线数量,或者省下所有市的离线数量
@@ -175,7 +198,8 @@ export default {
       // console.log(params, '我是父组件获取到了数据')
       const clickRegionCode = this.alladcode.filter(item => item.name === params.name)[0].adcode
       const clickLevel = this.alladcode.filter(item => item.name === params.name)[0].level
-      console.log(params,clickRegionCode ,clickLevel, '我是父组件获取到了数据')
+      const clickInfo = this.alladcode.filter(item => item.name === params.name)[0]
+      console.log(params,clickInfo, '我是父组件获取到了数据')
       if (clickLevel === 'province') {
         // 点击的是省
         this.formData.provinceName = params.name
@@ -189,12 +213,14 @@ export default {
       if (clickLevel === 'district') {
         // 点击的是县或区 这个时候没有下一级应该去请求全国的数据
         console.log('我是点击了区县')
-        this.formData.provinceId = ''
-        this.formData.provinceCode = ''
-        this.formData.provinceName = ''
-        this.formData.cityId = ''
-        this.formData.cityCode = ''
-        this.formData.cityName = ''
+        this.formData.districtName = params.name
+        this.formData.districtCode = clickRegionCode
+        // this.formData.provinceId = ''
+        // this.formData.provinceCode = ''
+        // this.formData.provinceName = ''
+        // this.formData.cityId = ''
+        // this.formData.cityCode = ''
+        // this.formData.cityName = ''
       }
       // 重新渲染数据
       const addressCode = []
@@ -204,7 +230,10 @@ export default {
       if (this.formData.cityCode) {
         addressCode.push(this.formData.cityCode)
       }
-      this.init(addressCode, clickRegionCode)
+      if (this.formData.districtCode) {
+        addressCode.push(this.formData.districtCode)
+      }
+      this.init(addressCode, clickRegionCode,clickInfo)
     },
   }
 }
