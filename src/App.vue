@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <router-view/> -->
-    <!-- <div>重命名</div> -->
+    <div style="color:#fff;position: absolute;cursor: pointer;z-index: 9999;" @click="mm">返回</div>
     <yyCenterTopVue
       :centerTopInfo="centerTopInfo"
       :regionGeoJson="regionGeoJson"
@@ -52,7 +52,7 @@ export default {
   },
   methods:{
     mm(){
-      console.log('我是谁阿凡达')
+      // console.log('我是谁阿凡达',fileRename)
     },
     init(addressCode = [], clickRegionCode) {
       // 默认获取全国的信息
@@ -211,6 +211,7 @@ export default {
 </script>
 <style lang="scss">
 #app {
+  position: relative;
   box-sizing: border-box;
   background-image: url('https://storage.360buyimg.com/gfkj-files/imgs/jby/screen_bg.png');
     width: 100%;
