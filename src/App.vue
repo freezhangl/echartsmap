@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <!-- <router-view/> -->
-    <div style="color:#fff;position: absolute;color: purple;font-weight: bold; cursor: pointer;z-index: 9999;top: 20px;right: 20px;" @click="goback" v-if="mapShow">
+    <div style="color:#fff;position: absolute;font-size: 20px; color: purple;font-weight: bold; cursor: pointer;z-index: 9999;top: 20px;right: 20px;" @click="goback" v-if="mapShow">
         返回
     </div>
-    <div style="color:#fff;position: absolute;cursor: pointer;color: purple;font-weight: bold;z-index: 9999;right: 20px;">
+    <div style="color:#fff;position: absolute;font-size: 20px; cursor: pointer;color: purple;font-weight: bold;z-index: 9999;right: 20px;">
         {{addressStr}}
     </div>
     <yyCenterTopVue

@@ -12,6 +12,7 @@
       @dragend="dragend"
       :max-zoom="18"
       >
+      <!-- <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation> -->
         <bm-map-type :map-types="['BMAP_NORMAL_MAP', 'BMAP_HYBRID_MAP']" anchor="BMAP_ANCHOR_TOP_LEFT"></bm-map-type>
         <!-- <template v-for="item in markers">
           <bm-marker :key="item.selfIndex" :position="item" @click="lookDetail(item)" animation="BMAP_ANIMATTION_DROP">
@@ -324,9 +325,16 @@ export default{
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .mapcon{
   width: 100%;
   height: 100%;
 }
+v::deep .BMap_cpyCtrl {
+    display: none!important;
+}
+v::deep .anchorBL {
+    display: none!important;
+}
+
 </style>
