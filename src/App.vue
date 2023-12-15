@@ -34,7 +34,8 @@ export default {
       bdmapShow:false,
       addressStr: '全国',
       mapShow:false,
-      origin: window.location.origin.indexOf('localhost') > 0 ? '' : window.location.origin + '/areas_v3/bound',
+      // origin: window.location.origin.indexOf('localhost') > 0 ? '' : window.location.origin + '/areas_v3/bound',
+      origin: window.location.origin.indexOf('localhost') > 0 ? '' : '',
       formData: {
         provinceName: '',
         provinceCode: '',
@@ -107,7 +108,8 @@ export default {
         const params = {
           provinceCode: this.formData.provinceCode
         }
-        await axios('/power/opsDashboard/test.json', params).then(res => {
+        await axios('/power/opsDashboard/test1.json', params).then(res => {
+        // await axios('/power/opsDashboard/test2.json', params).then(res => {
           console.log(res, '我是所有市的离线数量')
           lxList = res.data
         })
@@ -118,7 +120,7 @@ export default {
           // provinceCode: this.formData.provinceCode,
           cityCode: this.formData.cityCode
         }
-        await axios('/power/opsDashboard/test.json', params).then(res => {
+        await axios('/power/opsDashboard/test4.json', params).then(res => {
           console.log(res, '我是所有市的离线数量')
           lxList = res.data
         })
@@ -177,6 +179,8 @@ export default {
             item.areaCode = item1.areaCode
             item.areaStationCount = item1.areaStationCount
             item.offLineAreaStationCount = item1.offlineAreaStationCount
+            item.wIcon = item1.weatherInfo?.iconCode || '100'
+            item.wText = item1.weatherInfo?.weatherInfo || '晴'
             return true
           }
         })
@@ -187,6 +191,7 @@ export default {
         }
       })
       res.provinceName = this.formData.provinceName
+      res.cityName = this.formData.cityName
       if (type === '1') {
         res.isChinaInfo = true
       } else {
@@ -242,9 +247,10 @@ export default {
 #app {
   position: relative;
   box-sizing: border-box;
-  background-image: url('https://storage.360buyimg.com/gfkj-files/imgs/jby/screen_bg.png');
+  background-image: url('./assets/imgs_jby_screen_bg.png');
     width: 100%;
    height: 100%;
+   overflow:hidden;
 }
 html,body{
   height: 100%;

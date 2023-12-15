@@ -1,0 +1,101 @@
+[
+  {
+    "areaName": "淄博市",
+    "areaCode": "370300000000",
+    "areaStationCount": "3",
+    "offlineAreaStationCount": "0",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "枣庄市",
+    "areaCode": "370400000000",
+    "areaStationCount": "23",
+    "offlineAreaStationCount": "7",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "济宁市",
+    "areaCode": "370800000000",
+    "areaStationCount": "3",
+    "offlineAreaStationCount": "0",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "泰安市",
+    "areaCode": "370900000000",
+    "areaStationCount": "4",
+    "offlineAreaStationCount": "0",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "临沂市",
+    "areaCode": "371300000000",
+    "areaStationCount": "12",
+    "offlineAreaStationCount": "0",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "德州市",
+    "areaCode": "371400000000",
+    "areaStationCount": "24",
+    "offlineAreaStationCount": "5",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "聊城市",
+    "areaCode": "371500000000",
+    "areaStationCount": "2",
+    "offlineAreaStationCount": "1",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "滨州市",
+    "areaCode": "371600000000",
+    "areaStationCount": "3",
+    "offlineAreaStationCount": "1",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "菏泽市",
+    "areaCode": "371700000000",
+    "areaStationCount": "2",
+    "offlineAreaStationCount": "0",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  }
+]

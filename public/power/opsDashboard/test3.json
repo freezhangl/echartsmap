@@ -1,0 +1,24 @@
+[
+  {
+    "areaName": "育才区",
+    "areaCode": "460201000000",
+    "areaStationCount": "15",
+    "offlineAreaStationCount": "2",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "27",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "崖州区",
+    "areaCode": "460205000000",
+    "areaStationCount": "3",
+    "offlineAreaStationCount": "1",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "27",
+      "iconCode": "101"
+    }
+  }
+]

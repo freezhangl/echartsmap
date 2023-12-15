@@ -1,3 +1,24 @@
 [
-  {"areaName":"发"}
+  {
+    "areaName": "山东省",
+    "areaCode": "370000000000",
+    "areaStationCount": "76",
+    "offlineAreaStationCount": "14",
+    "weatherInfo": {
+      "weatherInfo": "多云",
+      "temperature": "-6",
+      "iconCode": "101"
+    }
+  },
+  {
+    "areaName": "海南省",
+    "areaCode": "460000000000",
+    "areaStationCount": "18",
+    "offlineAreaStationCount": "3",
+    "weatherInfo": {
+      "weatherInfo": "晴",
+      "temperature": "27",
+      "iconCode": "100"
+    }
+  }
 ]

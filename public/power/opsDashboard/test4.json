@@ -1,0 +1,13 @@
+[
+  {
+    "areaName": "陵城区",
+    "areaCode": "371403000000",
+    "areaStationCount": "24",
+    "offlineAreaStationCount": "5",
+    "weatherInfo": {
+      "weatherInfo": "阵雪",
+      "temperature": "-6",
+      "iconCode": "407"
+    }
+  }
+]

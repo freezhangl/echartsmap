@@ -1,0 +1,13 @@
+[
+  {
+    "areaName": "三亚市",
+    "areaCode": "460200000000",
+    "areaStationCount": "18",
+    "offlineAreaStationCount": "3",
+    "weatherInfo": {
+      "weatherInfo": "晴",
+      "temperature": "27",
+      "iconCode": "108"
+    }
+  }
+]

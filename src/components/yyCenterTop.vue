@@ -18,6 +18,7 @@ export default {
           if (this.myChartPieLeftNew) {
             this.myChartPieLeftNew.clear()
           }
+          this.firstShow = true
           this.setData()
         })
       },
@@ -27,7 +28,9 @@ export default {
   },
   data() {
     return {
-      myChartPieLeftNew: null
+      myChartPieLeftNew: null,
+      firstShow: true,
+      timeId: ''
     }
   },
   mounted() {
@@ -63,7 +66,7 @@ export default {
       const mapFeatures = this.$echarts.getMap(nameMap)?.geoJson?.features
       this.myChartPieLeftNew.hideLoading()
       if (!mapFeatures?.length) return
-      mapFeatures.forEach(function(v, index) {
+      mapFeatures.forEach((v, index) => {
         console.log(v, '我是v')
         // 地区名称
         mapData.push({
@@ -72,44 +75,68 @@ export default {
           hasOne: v.hasOne,
           offLineAreaStationCount: v.offLineAreaStationCount,
           areaCode: v.areaCode,
-          areaStationCount: v.areaStationCount
+          areaStationCount: v.areaStationCount,
+          wIcon: v.wIcon,
+          wText: v.wText
         })
         var name = v.properties.name
         geoCoordMap[name] = v.properties.center
-        var data = {
-          coordinateSystem: 'geo',
-          value: v.properties.center,
-          id: index,
-          name: name,
-          hasOne: v.hasOne,
-          offLineAreaStationCount: v.offLineAreaStationCount,
-          areaCode: v.areaCode,
-          areaStationCount: v.areaStationCount,
-          symbol:
-            v.offLineAreaStationCount > 0
-              ? 'image://https://storage.360buyimg.com/gfkj-files/imgs/jby/screen/map_error.png'
-              : 'image://https://storage.360buyimg.com/gfkj-files/imgs/jby/screen/map_success.png'
-        }
-        if (data.hasOne) {
-          iconData.push(data)
+        if (v.hasOne) {
+            var data = {
+              coordinateSystem: 'geo',
+              value: v.properties.center,
+              id: index,
+              name: name,
+              hasOne: v.hasOne,
+              offLineAreaStationCount: v.offLineAreaStationCount,
+              areaCode: v.areaCode,
+              areaStationCount: v.areaStationCount,
+              wIcon: v.wIcon,
+              wText: v.wText
+              // symbolSize: 25
+            }
+            console.log('火锅试试', v.wIcon)
+            // const svgPath = `http://116.198.18.192/gfkj-files/imgs/weather/${v.wIcon}.png`
+            const svgPath = `https://a.hecdn.net/img/common/icon/202106d/${v.wIcon}.png`
+            if (this.firstShow) {
+              data.symbol = v.offLineAreaStationCount > 0
+                  ? 'image://http://116.198.18.192/gfkj-files/imgs/jby/screen/map_error.png'
+                  : `image://${svgPath}`
+                  // : `path://${svgPath}`
+                  if (v.offLineAreaStationCount <= 0) {
+                    data.symbolSize = 25
+                  }
+            } else {
+              data.symbolSize = 25
+              data.symbol = `image://${svgPath}`
+            }
+            console.log(this.firstShow, data.symbol, v.offLineAreaStationCount > 0, '减肥的设计规范')
+            if (this.regionGeoJson?.addressCodeLength === 2) { // 判断是县级
+              if (v.offLineAreaStationCount > 0) {
+                iconData.push(data)
+              }
+            } else {
+              iconData.push(data)
+            }
         }
       })
+      // const svgPath = `http://116.198.18.192/gfkj-files/imgs/weather/100.png`
       // const points = []
       var serverdata = [
         {
-          // tooltip: {
-          //   trigger: 'item',
-          //   show: false
-          // },
+          tooltip: {
+            trigger: 'item',
+            show: false
+          },
           type: 'map',
           map: nameMap,
           zoom: this.regionGeoJson.isChinaInfo ? 1.2 : 1,
           roam: false,
           z: 1,
           // aspectScale: 0.75,
-          layoutCenter: this.regionGeoJson.provinceName === '海南省' ? ['35%', '50%'] : ['50%', '50%'],
-          layoutSize: this.regionGeoJson.provinceName === '海南省' ? '500%' : '100%',
-          center: this.regionGeoJson.provinceName === '海南省' ? [109.844902, 19.0392] : undefined,
+          layoutCenter: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? ['35%', '50%'] : ['50%', '50%'],
+          layoutSize: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? '500%' : '100%',
+          center: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? [109.844902, 19.0392] : undefined,
           itemStyle: {
             normal: {
               borderColor: '#fff',
@@ -157,10 +184,10 @@ export default {
           data: mapData
         },
         {
-          tooltip: {
-            trigger: 'item',
-            show: false
-          },
+          // tooltip: {
+          //   trigger: 'item',
+          //   show: false
+          // },
           // type: 'effectScatter',
           type: 'scatter',
           coordinateSystem: 'geo',
@@ -194,7 +221,7 @@ export default {
           trigger: 'item', // 鼠标划过时饼状图上显示的数据
           formatter: item => {
             // console.log(item, '加肥加大')
-            const aaa = require('../assets/infinity-2128861.jpg')
+            const aaa = require('../assets/bg1.png')
             var str = `<div style = "background:url(${aaa}) no-repeat 100% 100% ;height:90px;min-width:130px;color:#FFFFFF;">
                     <div style="padding-left:11px;padding-top:4px;">${item?.data?.name}:<br/>离线数量: ${item?.data?.offLineAreaStationCount}</div>
                 </div>`
@@ -206,8 +233,11 @@ export default {
           show: true,
           aspectScale: 0.75,
           zoom: this.regionGeoJson.isChinaInfo ? 1.2 : 1,
-          layoutCenter: ['50%', '51.5%'],
-          layoutSize: '100%',
+          // layoutCenter: ['50%', '51.5%'],
+          // layoutSize: '100%',
+          layoutCenter: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? ['35%', '50%'] : ['50%', '51.5%'],
+          layoutSize: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? '500%' : '100%',
+          center: this.regionGeoJson.provinceName === '海南省' && !this.regionGeoJson.cityName ? [109.844902, 19.0392] : undefined,
           roam: false,
           itemStyle: {
             normal: {
@@ -240,7 +270,7 @@ export default {
           z: 0,
           label: {
             normal: {
-              show: true
+              show: false
             },
             emphasis: {
               show: false
@@ -251,10 +281,18 @@ export default {
       }
       console.log(optionMap, '我是配防静电')
       this.myChartPieLeftNew.setOption(optionMap, { lazyMode: true })
+      if (this.timeId) {
+        clearInterval(this.timeId)
+      }
+      this.timeId = setInterval(() => {
+        this.firstShow = !this.firstShow
+        this.setData()
+      }, 3000)
     }
   },
   destroyed() {
     window.onresize = null
+    clearInterval(this.timeId)
   }
 }
 </script>
