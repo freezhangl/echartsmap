@@ -4,7 +4,7 @@
     <div style="color:#fff;position: absolute;font-size: 20px; color: purple;font-weight: bold; cursor: pointer;z-index: 9999;top: 20px;right: 20px;" @click="goback" v-if="mapShow">
         返回
     </div>
-    <div style="color:#fff;position: absolute;font-size: 20px; cursor: pointer;color: purple;font-weight: bold;z-index: 9999;right: 20px;">
+    <div @click="test" style="color:#fff;position: absolute;font-size: 20px; cursor: pointer;color: purple;font-weight: bold;z-index: 9999;right: 20px;">
         {{addressStr}}
     </div>
     <yyCenterTopVue
@@ -62,6 +62,38 @@ export default {
     this.bdmapShow=true
   },
   methods:{
+    test(){
+      console.log('我执行了')
+      //测试连接线上服务器接口
+      axios({ 
+          url:'/apiTest/api/login',
+          method:"post",
+          headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+          "tenant-id":"1"
+         },
+          data:{
+            username:'1',
+            password:'123456'
+          }
+        }).then(res => {
+          console.log(res, '我是所有省的离线数量')
+        })
+        axios({
+          url:'/szyw/api/power/powerArea/queryProvinceList',
+          method:'get',
+          headers:{
+            Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIzOTUzODMyMzMzMTk0MDM1MywiYWNjb3VudCI6ImNvbW1hbmRlcjEwMCIsInRlbmFudENvZGUiOiJzcGljIiwidXVpZCI6IjFkMWYyYmRiLTFlNmUtNDkwOC04ZmVlLTg1ZTA0ZjJjNjcwYyIsInN1YiI6IjIzOTUzODMyMzMzMTk0MDM1MyIsImlhdCI6MTcwMjg2Mzc5NCwiZXhwIjoxNzAyOTM1Nzk0fQ.3Gf9cRgBYaBRCQ9eaFaLp1pKJG2779gFzVnAeRLfDz4'
+          },
+          params: {
+            parentCode: 0
+          }
+        }).then(res=>[
+          console.log(res,'我是啥1')
+        ]).catch(err=>{
+          console.log(err,'我是啥2')
+        })
+    },
     goback(){
       this.formData.districtCode = ''
       this.formData.provinceCode = ''
