@@ -36,6 +36,7 @@ export default {
       mapShow:false,
       // origin: window.location.origin.indexOf('localhost') > 0 ? '' : window.location.origin + '/areas_v3/bound',
       origin: window.location.origin.indexOf('localhost') > 0 ? '' : '',
+      origin1:window.location.origin.indexOf('localhost') > 0 ? false : true,
       formData: {
         provinceName: '',
         provinceCode: '',
@@ -79,8 +80,14 @@ export default {
         }).then(res => {
           console.log(res, '我是所有省的离线数量')
         })
+        let url = ''
+        if (this.origin1) {
+          url = `http://116.198.18.192/szyw/api/power/powerArea/queryProvinceList`
+        } else {
+          url = `/szyw/api/power/powerArea/queryProvinceList`
+        }
         axios({
-          url:'/szyw/api/power/powerArea/queryProvinceList',
+          url,
           method:'get',
           headers:{
             Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIzOTUzODMyMzMzMTk0MDM1MywiYWNjb3VudCI6ImNvbW1hbmRlcjEwMCIsInRlbmFudENvZGUiOiJzcGljIiwidXVpZCI6IjFkMWYyYmRiLTFlNmUtNDkwOC04ZmVlLTg1ZTA0ZjJjNjcwYyIsInN1YiI6IjIzOTUzODMyMzMzMTk0MDM1MyIsImlhdCI6MTcwMjg2Mzc5NCwiZXhwIjoxNzAyOTM1Nzk0fQ.3Gf9cRgBYaBRCQ9eaFaLp1pKJG2779gFzVnAeRLfDz4'
