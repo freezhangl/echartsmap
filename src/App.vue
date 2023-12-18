@@ -66,8 +66,14 @@ export default {
     test(){
       console.log('我执行了')
       //测试连接线上服务器接口
+      let url1=''
+      if(this.origin1){
+        url1=`${window.location.origin}:3007/api/login`
+      }else{
+        url1='/apiTest/api/login'
+      }
       axios({ 
-          url:'/apiTest/api/login',
+          url:url1,
           method:"post",
           headers: {
           "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
