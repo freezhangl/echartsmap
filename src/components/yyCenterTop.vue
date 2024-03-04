@@ -71,13 +71,13 @@ export default {
         // 地区名称
         mapData.push({
           name: v.properties.name,
-          value: Math.random() * 100,
+          value: v.properties.name=='安徽省'||v.properties.name=='河南省'? Math.random() * 1500:0,
           hasOne: v.hasOne,
           offLineAreaStationCount: v.offLineAreaStationCount,
           areaCode: v.areaCode,
           areaStationCount: v.areaStationCount,
           wIcon: v.wIcon,
-          wText: v.wText
+          wText: v.wText,
         })
         var name = v.properties.name
         geoCoordMap[name] = v.properties.center
@@ -161,7 +161,8 @@ export default {
               }
             },
             emphasis: {
-              areaColor: '##5CA7F7',
+              // areaColor: '#ffffff00',
+              areaColor: null,
               label: {
                 show: true,
                 color: 'rgba(255, 255, 255, 1)',
@@ -183,35 +184,45 @@ export default {
           selectedMode: false,
           data: mapData
         },
-        {
-          // tooltip: {
-          //   trigger: 'item',
-          //   show: false
-          // },
-          // type: 'effectScatter',
-          type: 'scatter',
-          coordinateSystem: 'geo',
-          // geoIndex: 2,
-          showEffectOn: 'render',
-          zlevel: 1,
-          // rippleEffect: {
-          //     period: 15,
-          //     scale: 4,
-          //     brushType: 'fill'
-          // },
-          hoverAnimation: true,
-          itemStyle: {
-            normal: {
-              color: '#1DE9B6',
-              shadowBlur: 10,
-              shadowColor: '#333'
-            }
-          },
-          symbolSize: 35,
-          data: iconData
-        }
+        // {
+        //   // tooltip: {
+        //   //   trigger: 'item',
+        //   //   show: false
+        //   // },
+        //   // type: 'effectScatter',
+        //   type: 'scatter',
+        //   coordinateSystem: 'geo',
+        //   // geoIndex: 2,
+        //   showEffectOn: 'render',
+        //   zlevel: 1,
+        //   // rippleEffect: {
+        //   //     period: 15,
+        //   //     scale: 4,
+        //   //     brushType: 'fill'
+        //   // },
+        //   hoverAnimation: true,
+        //   itemStyle: {
+        //     normal: {
+        //       color: '#1DE9B6',
+        //       shadowBlur: 10,
+        //       shadowColor: '#333'
+        //     }
+        //   },
+        //   symbolSize: 35,
+        //   data: iconData
+        // }
       ]
       const optionMap = {
+        visualMap: {
+        min: 0,
+        max: 1500,
+        text: ['High', 'Low'],
+        realtime: false,
+        calculable: true,
+        inRange: {
+          color: ['#114790', '#d08a00', '#c23c33']
+        }
+      },
         tooltip: {
           //   position: ['50%', '50%'],
           backgroundColor: 'rgba(0,0,0,0)',
